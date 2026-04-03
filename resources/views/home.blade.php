@@ -35,7 +35,7 @@
                         pengaduan terkait sarana sekolah yang rusak atau tidak berfungsi.
                     </p>
 
-                    <a href="#" class="btn btn-outline-primary me-2">
+                    <a href="{{ route('loginAdmin') }}" class="btn btn-outline-primary me-2">
                         <i class="fa-solid fa-user-tie"></i> Login Admin
                     </a>
 

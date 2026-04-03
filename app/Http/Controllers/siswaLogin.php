@@ -7,6 +7,12 @@ use App\Models\Siswa;
 
 class siswaLogin extends Controller
 {
+    /* Display a listing of the resource. */
+    public function index()
+    {
+        return view('siswa.loginSiswa', compact('dataSiswa'));
+    }
+
     /* Display the specified resource. */
 
     public function showForm()
@@ -26,12 +32,12 @@ class siswaLogin extends Controller
         $siswa = Siswa::where('nis', $request->nis)->first();
 
         if (!$siswa) {
-            return back()->withErrors(['nis' => 'NIS tidak ditemukan'])->withInput();
+            return redirect()->route('loginSiswa')->with('errorNIS', 'NIS-mu gak ketemu bos!');
         }
 
         session(['siswa_nis' => $siswa->nis]);
 
-        return redirect()->route('siswa.homeSiswa')->with('success', 'Login berhasil.');
+        return redirect()->route('siswa.homeSiswa')->with('success', 'Selamat datang bos!.');
     }
 
     public function logout()

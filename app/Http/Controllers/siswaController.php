@@ -11,7 +11,6 @@ class siswaController extends Controller
     public function index()
     {
         $dataSiswa = Siswa::all();
-        return view('siswa.loginSiswa', compact('dataSiswa'));
     }
 
     /* Show the form for creating a new resource. */

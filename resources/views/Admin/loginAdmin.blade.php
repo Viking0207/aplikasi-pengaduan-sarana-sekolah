@@ -4,45 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login Siswa</title>
+    <title>Login Admin</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
 </head>
 <body class="bg-light">
-    
+
     <div class="container" style="margin-top: 7rem;">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-6 shadow p-4 bg-success-subtle rounded">
-                
+
                 <div class="card mb-4">
                     <div class="card-header bg-success text-white text-center">
-                        <h5>Login Siswa</h5>
+                        <h5>Login Admin</h5>
                     </div>
                 </div>
-                
+
                 <div class="card-body">
-                    <form action="{{ route('siswa.login') }}" method="POST">
+                    <form action="{{ route('admin.login') }}" method="POST">
                         @csrf
-                        
-                        @if(@session('errorNIS'))
+
+                        @if(@session('errorUSER'))
                             <div class="alert alert-danger">
-                                {{ session('errorNIS') }}
+                                {{ session('errorUSER') }}
                             </div>
                         @endif
 
+                        <div class="form-floating border border-success rounded mb-3">
+                            <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username" required>
+                            <label for="floatingInput">Username</label>
+                        </div>
+
                         <div class="form-floating border border-success rounded mb-5">
-                            <input type="text" class="form-control @if(session('error')) is-invalid @endif" id="floatingInput" name="nis" placeholder="NIS" required>
-                            <label for="floatingInput">NIS</label>
+                            <input type="password" class="form-control" id="floatingInput" name="password" placeholder="Password" required>
+                            <label for="floatingInput">Password</label>
                         </div>
                         
                         <button type="submit" class="btn btn-outline-primary w-100 d-grid">Login</button>
-                        
+        
                     </form>
-                    
+
                     <hr class="my-4">
 
                     <div class="text-center">
