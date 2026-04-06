@@ -85,7 +85,7 @@
             <div class="col-md-12 shadow p-4 bg-info-subtle rounded">
 
                 <div class="text-center mb-4 border-bottom border-dark-subtle">
-                    <h5>Table Data Siswa</h5>
+                    <h5>Tabel Data Siswa</h5>
                 </div>
 
                 <table class="table table-bordered table-striped">

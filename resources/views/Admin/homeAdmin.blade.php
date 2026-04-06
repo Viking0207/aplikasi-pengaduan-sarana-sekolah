@@ -92,7 +92,7 @@
                             <i class="fa-solid fa-unlock mb-3"></i>
                             <h5>Akun Admin</h5>
                                 <p class="text-muted">Kelola akun admin</p>
-                                <a href="#" class="btn btn-primary">Kelola admin</a>
+                                <a href="{{ route('admin.index') }}" class="btn btn-primary">Kelola admin</a>
                         </div>
                     </div>
                 </div>

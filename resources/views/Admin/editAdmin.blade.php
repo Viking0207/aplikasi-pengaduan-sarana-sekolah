@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Siswa</title>
+    <title>Edit Admin</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -13,7 +13,7 @@
 
     <div class="text-start ms-4 pt-3">
         <h5>
-            <a href="{{ route('siswa.index') }}" class="text-decoration-none text-info"> 
+            <a href="{{ route('admin.index') }}" class="text-decoration-none text-info"> 
                 <i class="fa-solid fa-angles-left"></i> Kembali
             </a>
         </h5>
@@ -30,21 +30,28 @@
                 {{-- Form Buat Data Siswa--}}
 
                     <div class="card-body">
-                        <form action="{{ route('siswa.update', $siswa->nis) }}" method="POST">
+                        <form action="{{ route('admin.update', $admin->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 
+                            {{-- Error Message --}}
+                            @if(@session('errorPASS'))
+                                <div class="alert alert-danger">
+                                    {{ session('errorPASS') }}
+                                </div>
+                            @endif
+
                             <div class="form-floating border border-info rounded mb-3">
-                                <input type="text" class="form-control" id="floatingInput" name="nis" placeholder="NIS (Nomor Induk Siswa)" value="{{ old('nis', $siswa->nis) }}" maxlength="9" pattern="[0-9]{9}" inputmode="numeric" required>
-                                <label for="floatingInput">NIS (Nomor Induk Siswa)</label>
+                                <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username" value="{{ old('username', $admin->username) }}" required>
+                                <label for="floatingInput">Username</label>
                             </div>
 
                             <div class="form-floating border border-info rounded mb-5">
-                                <input type="text" class="form-control" id="floatingInput" name="kelas" placeholder="Kelas" value="{{ $siswa->kelas }}" required>
-                                <label for="floatingInput">Kelas</label>
+                                <input type="password" class="form-control" id="floatingInput" name="password" placeholder="Password" minlength="6" required>
+                                <label for="floatingInput">Password</label>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary w-100 d-grid">Edit siswa</button>
+                            <button type="submit" class="btn btn-primary w-100 d-grid">Edit admin</button>
             
                         </form>
                     </div>

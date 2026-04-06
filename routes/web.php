@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\siswaController;
 use App\Http\Controllers\siswaLogin;
 use App\Http\Controllers\adminLogin;
+use App\Http\Controllers\adminController;
 
 /* MODELS */
 use App\Models\Siswa;
@@ -22,11 +23,15 @@ Route::get('/siswa/create', [siswaController::class, 'create'])->name('siswa.cre
 Route::post('/siswa', [siswaController::class, 'store'])->name('siswa.store');
 Route::put('/siswa/{nis}/update', [siswaController::class, 'update'])->name('siswa.update');
 Route::delete('/siswa/{nis}', [siswaController::class, 'destroy'])->name('siswa.destroy');
-
-/* EDIT CRUD SISWA (ADMIN) */
 Route::get('/siswa/{nis}/edit', [siswaController::class, 'edit'])->name('siswa.edit');
 
-
+/* CRUD ADMIN (ADMIN) */
+Route::get('/admin', [adminController::class, 'index'])->name('admin.index');
+Route::get('/admin/create', [adminController::class, 'create'])->name('admin.create');
+Route::post('/admin', [adminController::class, 'store'])->name('admin.store');
+Route::put('/admin/{id}/update', [adminController::class, 'update'])->name('admin.update');
+Route::delete('/admin/{id}', [adminController::class, 'destroy'])->name('admin.destroy');
+Route::get('/admin/{id}/edit', [adminController::class, 'edit'])->name('admin.edit');
 
 /* LOGIN SISWA */
 Route::get('/login-siswa', [siswaLogin::class, 'index'])->name('loginSiswa');

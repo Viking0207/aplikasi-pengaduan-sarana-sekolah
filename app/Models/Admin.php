@@ -8,8 +8,12 @@ class Admin extends Model
 {
     protected $table = 'admin';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'username',
         'password',
     ];
+
+    public $timestamps = false;
 }
