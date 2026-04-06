@@ -16,11 +16,17 @@ Route::get('/', function () {
 });
 
 
-/* CRUD SISWA */
+/* CRUD SISWA (ADMIN) */
+Route::get('/siswa', [siswaController::class, 'index'])->name('siswa.index');
 Route::get('/siswa/create', [siswaController::class, 'create'])->name('siswa.create');
 Route::post('/siswa', [siswaController::class, 'store'])->name('siswa.store');
-Route::put('/siswa/{id}', [siswaController::class, 'update'])->name('siswa.update');
-Route::delete('/siswa/{id}', [siswaController::class, 'destroy'])->name('siswa.destroy');
+Route::put('/siswa/{nis}/update', [siswaController::class, 'update'])->name('siswa.update');
+Route::delete('/siswa/{nis}', [siswaController::class, 'destroy'])->name('siswa.destroy');
+
+/* EDIT CRUD SISWA (ADMIN) */
+Route::get('/siswa/{nis}/edit', [siswaController::class, 'edit'])->name('siswa.edit');
+
+
 
 /* LOGIN SISWA */
 Route::get('/login-siswa', [siswaLogin::class, 'index'])->name('loginSiswa');

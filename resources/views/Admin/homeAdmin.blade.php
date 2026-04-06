@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home Admin</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 </head>
@@ -82,7 +80,7 @@
                             <i class="fa-solid fa-users mb-3"></i>
                             <h5>Data Siswa</h5>
                                 <p class="text-muted">Kelola data siswa di sekolah</p>
-                                <a href="#" class="btn btn-primary">Tambah siswa</a>
+                                <a href="{{ route('siswa.index') }}" class="btn btn-primary">Tambah siswa</a>
                         </div>
                     </div>
                 </div>

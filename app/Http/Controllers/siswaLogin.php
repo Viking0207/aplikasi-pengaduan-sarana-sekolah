@@ -10,6 +10,7 @@ class siswaLogin extends Controller
     /* Display a listing of the resource. */
     public function index()
     {
+        $dataSiswa = Siswa::all();
         return view('siswa.loginSiswa', compact('dataSiswa'));
     }
 

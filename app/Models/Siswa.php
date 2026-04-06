@@ -13,6 +13,11 @@ class Siswa extends Model
         'kelas',
     ];
 
+    public $primaryKey = 'nis';
+    public $incrementing = false;
+
+    public $timestamps = false;
+    
     public function InputAspirasi()
     {
         return $this->hasMany(InputAspirasi::class);
