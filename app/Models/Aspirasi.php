@@ -8,15 +8,28 @@ class Aspirasi extends Model
 {
     protected $table = 'aspirasi';
 
+    protected $primaryKey = 'id_aspirasi';
+
     protected $fillable = [
-        'id_aspirasi',
         'status',
         'id_kategori',
         'feedback',
     ];
 
+    public $timestamps = false;
+
     public function Kategori()
     {
-        return $this->belongsTo(Kategori::class);
+        return $this->belongsTo(Kategori::class, 'id_kategori');
     }
+
+    public function inputAspirasi()
+    {
+        return $this->hasOne(InputAspirasi::class, 'id_pelaporan', 'id_pelaporan',);
+    }
+
+    public function Siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'nis', 'nis');
+    }   
 }

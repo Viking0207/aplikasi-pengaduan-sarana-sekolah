@@ -8,12 +8,13 @@ class Siswa extends Model
 {
     protected $table = 'siswa';
     
+    public $primaryKey = 'nis';
+    
     protected $fillable = [
         'nis',
         'kelas',
     ];
 
-    public $primaryKey = 'nis';
     public $incrementing = false;
 
     public $timestamps = false;
@@ -21,5 +22,10 @@ class Siswa extends Model
     public function InputAspirasi()
     {
         return $this->hasMany(InputAspirasi::class);
+    }
+
+    public function Aspirasi()
+    {
+        return $this->hasMany(Aspirasi::class, 'nis', 'nis');
     }
 }

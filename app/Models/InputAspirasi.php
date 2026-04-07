@@ -8,8 +8,9 @@ class InputAspirasi extends Model
 {
     protected $table = 'input_aspirasi';
 
+    protected $primaryKey = 'id_pelaporan';
+
     protected $fillable = [
-        'id_pelaporan',
         'nis',
         'id_kategori',
         'lokasi',
@@ -17,13 +18,15 @@ class InputAspirasi extends Model
         'tanggal'
     ];
 
+    public $timestamps = false;
+
     public function Siswa()
     {
-        return $this->belongsTo(Siswa::class);
+        return $this->belongsTo(Siswa::class, 'nis', 'nis');
     }
 
     public function Kategori()
     {
-        return $this->belongsTo(Kategori::class);
+        return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
 }

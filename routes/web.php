@@ -7,6 +7,7 @@ use App\Http\Controllers\siswaController;
 use App\Http\Controllers\siswaLogin;
 use App\Http\Controllers\adminLogin;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\aspirasiControl;
 
 /* MODELS */
 use App\Models\Siswa;
@@ -68,6 +69,12 @@ Route::get('/home-admin', function () {
 
     return view('Admin.homeAdmin', compact('dataAdmin'));
 })->name('admin.homeAdmin');
+
+/* Data Aspirasi */
+Route::get('/data-pengaduan', [aspirasiControl::class, 'index'])->name('aspirasi.index');
+Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
+Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name('aspirasi.edit');
+
 
 
 

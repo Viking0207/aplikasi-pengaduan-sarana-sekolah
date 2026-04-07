@@ -56,7 +56,7 @@
                             <i class="fa-brands fa-rocketchat mb-3"></i>
                             <h5>Data Pengaduan</h5>
                                 <p class="text-muted">Lihat pengaduan sarana dan prasarana</p>
-                                <a href="#" class="btn btn-primary">Lihat Detail</a>
+                                <a href="{{ route('aspirasi.index') }}" class="btn btn-primary">Lihat Detail</a>
                         </div>
                     </div>
                 </div>

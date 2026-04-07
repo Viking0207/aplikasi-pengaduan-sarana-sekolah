@@ -8,18 +8,22 @@ class Kategori extends Model
 {
     protected $table = 'kategori';
     
+    public $primaryKey = 'id_kategori';
+
     protected $fillable = [
-        'id_kategori',
         'ket_kategori',
     ];
 
+    public $timestamps = false;
+
     public function Aspirasi()
     {
-        return $this->hasMany (Aspirasi::class);
+        return $this->hasMany (Aspirasi::class, 'id_kategori');
     }
 
     public function InputAspirasi()
     {
         return $this->hasMany(InputAspirasi::class);
     }
+    
 }
