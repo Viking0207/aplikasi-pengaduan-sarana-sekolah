@@ -8,7 +8,7 @@ use App\Http\Controllers\siswaLogin;
 use App\Http\Controllers\adminLogin;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\aspirasiControl;
-
+use App\Http\Controllers\kategoriContoller;
 /* MODELS */
 use App\Models\Siswa;
 use App\Models\Admin;
@@ -75,6 +75,12 @@ Route::get('/data-pengaduan', [aspirasiControl::class, 'index'])->name('aspirasi
 Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
 Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name('aspirasi.edit');
 
+/* Kategori */
+Route::get('/kategori', [kategoriContoller::class, 'index'])->name('kategori.index');
+Route::get('/kategori/create', [kategoriContoller::class, 'create'])->name('kategori.crceate');
+Route::post('/kategori', [kategoriContoller::class, 'store'])->name('kategori.store');
+Route::delete('/kategori/{id}', [kategoriContoller::class, 'destroy'])->name('kategori.destroy');
+Route::get('/kategori/search', [kategoriContoller::class, 'search'])->name('kategori.search');
 
 
 

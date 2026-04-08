@@ -44,7 +44,7 @@
                             <i class="fa-solid fa-bars mb-3"></i>
                             <h5>Kategori</h5>
                                 <p class="text-muted">Pilih kategori sarana dan prasarana</p>
-                                <a href="#" class="btn btn-primary">Lihat Kategori</a>
+                                <a href="{{ route('kategori.index') }}" class="btn btn-primary">Lihat Kategori</a>
                         </div>
                     </div>
                 </div>
