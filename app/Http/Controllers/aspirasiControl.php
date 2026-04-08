@@ -5,17 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Aspirasi;
 use App\Models\InputAspirasi;
+use App\Models\HistoriAspirasi;
 use App\Models\Kategori;
 use App\Models\Siswa;
 
 class aspirasiControl extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        // ✅ Cara terbaik: Langsung pakai relasi dari InputAspirasi
         $dataInput = InputAspirasi::with(['aspirasi', 'kategori', 'siswa'])->get();
         
         $dataFinal = [];
@@ -23,30 +20,21 @@ class aspirasiControl extends Controller
         foreach ($dataInput as $input) {
             $dataFinal[] = [
                 'input' => $input,
-                'aspirasi' => $input->aspirasi,  // dari relasi
-                'kategori' => $input->kategori,  // dari relasi
-                'siswa' => $input->siswa,        // dari relasi
+                'aspirasi' => $input->aspirasi,
+                'kategori' => $input->kategori,
+                'siswa' => $input->siswa,
             ];
         }
-        
-        // Alternative: Kalau dataFinal langsung bisa pakai $dataInput
-        // $dataFinal = $dataInput;
         
         return view('Admin.dataPengaduan', compact('dataFinal'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $kategori = Kategori::all();
         return view('Admin.tambahPengaduan', compact('kategori'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -57,7 +45,6 @@ class aspirasiControl extends Controller
             'status' => 'required|in:menunggu,proses,selesai,ditolak',
         ]);
 
-        // Simpan ke InputAspirasi
         $input = InputAspirasi::create([
             'nis' => $request->nis,
             'id_kategori' => $request->id_kategori,
@@ -65,7 +52,6 @@ class aspirasiControl extends Controller
             'ket' => $request->ket,
         ]);
 
-        // Simpan ke Aspirasi
         Aspirasi::create([
             'id_pelaporan' => $input->id_pelaporan,
             'id_kategori' => $request->id_kategori,
@@ -76,13 +62,16 @@ class aspirasiControl extends Controller
         return redirect()->route('aspirasi.index')->with('success', 'Data pengaduan berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $aspirasi = Aspirasi::findOrFail($id);
-        $input = InputAspirasi::where('id_pelaporan', $id)->first();
+        // Cari berdasarkan id_aspirasi ATAU id_pelaporan
+        $aspirasi = Aspirasi::where('id_aspirasi', $id)->orWhere('id_pelaporan', $id)->first();
+        
+        if (!$aspirasi) {
+            return redirect()->route('aspirasi.index')->with('error', 'Data tidak ditemukan');
+        }
+        
+        $input = InputAspirasi::where('id_pelaporan', $aspirasi->id_pelaporan)->first();
         $siswa = $input ? Siswa::where('nis', $input->nis)->first() : null;
         $kategori = Kategori::find($aspirasi->id_kategori);
         
@@ -90,35 +79,39 @@ class aspirasiControl extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * PERBAIKAN UTAMA: edit() sekarang bisa menerima id_aspirasi ATAU id_pelaporan
      */
     public function edit(string $id)
     {
-        // Ambil data dari InputAspirasi berdasarkan id_pelaporan
-        $input = InputAspirasi::with(['aspirasi', 'kategori', 'siswa'])
-            ->where('id_pelaporan', $id)
+        // Langkah 1: Cari aspirasi berdasarkan id_aspirasi atau id_pelaporan
+        $aspirasi = Aspirasi::where('id_aspirasi', $id)->orWhere('id_pelaporan', $id)->first();
+        
+        if (!$aspirasi) {
+            return redirect()->route('aspirasi.index')->with('error', 'Data aspirasi tidak ditemukan untuk ID: ' . $id);
+        }
+        
+        // Langkah 2: Cari input berdasarkan id_pelaporan dari aspirasi
+        $input = InputAspirasi::with(['kategori', 'siswa'])
+            ->where('id_pelaporan', $aspirasi->id_pelaporan)
             ->first();
         
         if (!$input) {
-            return redirect()->route('aspirasi.index')->with('error', 'Data tidak ditemukan');
+            return redirect()->route('aspirasi.index')->with('error', 'Data input aspirasi tidak ditemukan');
         }
         
-        $aspirasi = $input->aspirasi;
+        // Langkah 3: Siapkan data untuk view
         $siswa = $input->siswa;
-        $kategori = Kategori::all(); // Ini untuk pilihan kategori di form (jika perlu edit kategori)
-        $kategoriTerpilih = $input->kategori; // Ini kategori yang dipilih
+        $kategoriTerpilih = $input->kategori;
+        $allKategori = Kategori::all();
         
-        return view('Admin.lihatDataPengaduan', compact('input', 'aspirasi', 'siswa', 'kategori', 'kategoriTerpilih'));
+        return view('Admin.lihatDataPengaduan', compact('aspirasi', 'input', 'siswa', 'kategoriTerpilih', 'allKategori'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
             'status' => 'required|in:menunggu,proses,selesai,ditolak',
-            'feedback' => 'nullable|string',
+            'feedback' => 'nullable|string|max:500',
         ]);
 
         // Cari aspirasi berdasarkan id_aspirasi atau id_pelaporan
@@ -133,30 +126,42 @@ class aspirasiControl extends Controller
             'status' => $request->status,
             'feedback' => $request->feedback,
         ]);
+        
+        // Ambil nis dengan aman
+        $nis = null;
+        $input = InputAspirasi::where('id_pelaporan', $aspirasi->id_pelaporan)->first();
+        if ($input) {
+            $nis = $input->nis;
+        }
+        
+        // SIMPAN KE HISTORI
+        HistoriAspirasi::create([
+            'id_aspirasi' => $aspirasi->id_aspirasi,
+            'nis' => $nis,
+            'status' => $request->status,
+            'feedback' => $request->feedback,
+            'tanggal_update' => now(),
+        ]);
 
         return redirect()->route('aspirasi.index')->with('success', 'Status dan feedback berhasil diupdate.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        // Cari data berdasarkan id_pelaporan
-        $input = InputAspirasi::where('id_pelaporan', $id)->first();
+        // Cari aspirasi dulu
+        $aspirasi = Aspirasi::where('id_aspirasi', $id)->orWhere('id_pelaporan', $id)->first();
         
-        if ($input) {
-            // Hapus aspirasi terkait dulu
-            if ($input->aspirasi) {
-                $input->aspirasi->delete();
-            }
+        if ($aspirasi) {
+            // Hapus histori terkait
+            HistoriAspirasi::where('id_aspirasi', $aspirasi->id_aspirasi)->delete();
+            
+            // Hapus aspirasi
+            $aspirasi->delete();
+            
             // Hapus input aspirasi
-            $input->delete();
-        } else {
-            // Kalau tidak ditemukan di InputAspirasi, coba hapus langsung dari Aspirasi
-            $aspirasi = Aspirasi::where('id_pelaporan', $id)->first();
-            if ($aspirasi) {
-                $aspirasi->delete();
+            $input = InputAspirasi::where('id_pelaporan', $aspirasi->id_pelaporan)->first();
+            if ($input) {
+                $input->delete();
             }
         }
 
