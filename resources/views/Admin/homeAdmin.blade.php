@@ -15,7 +15,7 @@
     <nav class="navbar navbar-dark bg-primary">
         <div class="container">
             <a href="#" class="navbar-brand mb-2 h1 fs-4">
-                <i class="fa-solid fa-school pt-2"></i> PESALAH - {{ session('admin_username') }}
+                <i class="fa-solid fa-user-tie"></i> PESALAH - {{ session('admin_username') }}
             </a>
             <form action="{{ route('admin.logout') }}" method="POST" class="d-flex">
                 @csrf
@@ -68,7 +68,7 @@
                             <i class="fa-solid fa-book-bookmark mb-3"></i>
                             <h5>Laporan</h5>
                                 <p class="text-muted">Rekap pengaduan</p>
-                                <a href="#" class="btn btn-primary">Lihat Detail</a>
+                                <a href="{{ route('laporan.index') }}" class="btn btn-primary">Lihat Detail</a>
                         </div>
                     </div>
                 </div>

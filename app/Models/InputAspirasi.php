@@ -18,7 +18,7 @@ class InputAspirasi extends Model
         'tanggal'
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function Siswa()
     {
@@ -28,5 +28,10 @@ class InputAspirasi extends Model
     public function Kategori()
     {
         return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
+    }
+
+    public function aspirasi()
+    {
+        return $this->hasOne(Aspirasi::class, 'id_pelaporan', 'id_pelaporan');
     }
 }

@@ -32,4 +32,5 @@ class Aspirasi extends Model
     {
         return $this->belongsTo(Siswa::class, 'nis', 'nis');
     }   
+    
 }

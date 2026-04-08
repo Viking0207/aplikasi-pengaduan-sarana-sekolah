@@ -8,9 +8,10 @@ use App\Http\Controllers\siswaLogin;
 use App\Http\Controllers\adminLogin;
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\aspirasiControl;
+use App\Http\Controllers\forumAspirasi;
 use App\Http\Controllers\kategoriContoller;
+use App\Http\Controllers\laporanAdmin;
 /* MODELS */
-use App\Models\Siswa;
 use App\Models\Admin;
 
 Route::get('/', function () {
@@ -38,19 +39,6 @@ Route::get('/admin/{id}/edit', [adminController::class, 'edit'])->name('admin.ed
 Route::get('/login-siswa', [siswaLogin::class, 'index'])->name('loginSiswa');
 Route::post('/siswa/login', [siswaLogin::class, 'login'])->name('siswa.login');
 Route::post('/siswa/logout', [siswaLogin::class, 'logout'])->name('siswa.logout');
-Route::get('/home-siswa', function () {
-    if (!session('siswa_nis')) {
-        return 'Belum login';
-    }
-
-    $dataSiswa = Siswa::where('nis', session('siswa_nis'))->first();
-
-    if (!$dataSiswa) {
-        return 'Data siswa tidak ditemukan';
-    }
-
-    return view('siswa.homeSiswa', compact('dataSiswa'));
-})->name('siswa.homeSiswa');
 
 /* LOGIN ADMIN */
 Route::get('/login-admin', [adminLogin::class, 'index'])->name('loginAdmin');
@@ -60,16 +48,17 @@ Route::get('/home-admin', function () {
     if (!session('admin_username')) {
         return 'Belum login';
     }
-
+    
     $dataAdmin = Admin::where('username', session('admin_username'))->first();
-
+    
     if (!$dataAdmin) {
         return 'Data admin tidak ditemukan';
     }
+        
+        return view('Admin.homeAdmin', compact('dataAdmin'));
 
-    return view('Admin.homeAdmin', compact('dataAdmin'));
-})->name('admin.homeAdmin');
-
+    })->name('admin.homeAdmin');
+            
 /* Data Aspirasi */
 Route::get('/data-pengaduan', [aspirasiControl::class, 'index'])->name('aspirasi.index');
 Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
@@ -77,18 +66,20 @@ Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name(
 
 /* Kategori */
 Route::get('/kategori', [kategoriContoller::class, 'index'])->name('kategori.index');
-Route::get('/kategori/create', [kategoriContoller::class, 'create'])->name('kategori.crceate');
+Route::get('/kategori/create', [kategoriContoller::class, 'create'])->name('kategori.create');
 Route::post('/kategori', [kategoriContoller::class, 'store'])->name('kategori.store');
 Route::delete('/kategori/{id}', [kategoriContoller::class, 'destroy'])->name('kategori.destroy');
 Route::get('/kategori/search', [kategoriContoller::class, 'search'])->name('kategori.search');
 
+/* Histori Admin */
+Route::get('/Laporan', [laporanAdmin::class, 'index'])->name('laporan.index');
 
-
-
-
-
-
-
+/* Input Aspirasi Siswa */
+Route::get('/home-siswa', [forumAspirasi::class, 'index'])->name('forum.index');
+Route::post('/aspirasi', [forumAspirasi::class, 'store'])->name('forum.store');
+Route::get('/aspirasi/{id}/edit', [forumAspirasi::class, 'edit'])->name('forum.edit');
+Route::put('/aspirasi/{id}', [forumAspirasi::class, 'update'])->name('forum.update');
+Route::delete('/aspirasi/{id}', [forumAspirasi::class, 'destroy'])->name('forum.destroy');
 
 
 

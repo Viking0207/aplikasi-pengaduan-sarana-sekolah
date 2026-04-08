@@ -36,9 +36,12 @@ class siswaLogin extends Controller
             return redirect()->route('loginSiswa')->with('errorNIS', 'NIS-mu gak ketemu bos!');
         }
 
-        session(['siswa_nis' => $siswa->nis]);
+        session([
+            'siswa_nis' => $siswa->nis,
+            'siswa_kelas' => $siswa->kelas
+            ]);
 
-        return redirect()->route('siswa.homeSiswa')->with('success', 'Selamat datang bos!.');
+        return redirect()->route('forum.index')->with('success', 'Selamat datang bos!.');
     }
 
     public function logout()
