@@ -10,31 +10,29 @@ use App\Models\Siswa;
 
 class aspirasiControl extends Controller
 {
-    /* Display a listing of the resource. */
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $dataAspirasi = Aspirasi::all();
+        // ✅ Cara terbaik: Langsung pakai relasi dari InputAspirasi
+        $dataInput = InputAspirasi::with(['aspirasi', 'kategori', 'siswa'])->get();
+        
         $dataFinal = [];
-
-        foreach ($dataAspirasi as $aspirasi) {
-            
-            $input = InputAspirasi::where('id_pelaporan', $aspirasi->id_aspirasi)->first();
-
-            $siswa = $input ? Siswa::where('nis', $input->nis)->first() : null;
-
-            $kategori = Kategori::where('id_kategori', $aspirasi->id_kategori)->first();
-
+        
+        foreach ($dataInput as $input) {
             $dataFinal[] = [
-                'aspirasi' => $aspirasi,
                 'input' => $input,
-                'siswa' => $siswa,
-                'kategori' => $kategori,
+                'aspirasi' => $input->aspirasi,  // dari relasi
+                'kategori' => $input->kategori,  // dari relasi
+                'siswa' => $input->siswa,        // dari relasi
             ];
         }
-
-    
+        
+        // Alternative: Kalau dataFinal langsung bisa pakai $dataInput
+        // $dataFinal = $dataInput;
+        
         return view('Admin.dataPengaduan', compact('dataFinal'));
-
     }
 
     /**
@@ -42,8 +40,8 @@ class aspirasiControl extends Controller
      */
     public function create()
     {
-
-        return view('Admin.dataPengaduan', compact('aspirasi'));
+        $kategori = Kategori::all();
+        return view('Admin.tambahPengaduan', compact('kategori'));
     }
 
     /**
@@ -51,30 +49,66 @@ class aspirasiControl extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nis' => 'required|exists:siswa,nis',
+            'id_kategori' => 'required|exists:kategori,id_kategori',
+            'lokasi' => 'required|string',
+            'ket' => 'required|string',
+            'status' => 'required|in:menunggu,proses,selesai,ditolak',
+        ]);
+
+        // Simpan ke InputAspirasi
+        $input = InputAspirasi::create([
+            'nis' => $request->nis,
+            'id_kategori' => $request->id_kategori,
+            'lokasi' => $request->lokasi,
+            'ket' => $request->ket,
+        ]);
+
+        // Simpan ke Aspirasi
+        Aspirasi::create([
+            'id_pelaporan' => $input->id_pelaporan,
+            'id_kategori' => $request->id_kategori,
+            'status' => $request->status,
+            'feedback' => $request->feedback ?? null,
+        ]);
+
+        return redirect()->route('aspirasi.index')->with('success', 'Data pengaduan berhasil ditambahkan.');
     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    { 
-        // $aspirasi = Aspirasi::findOrFail($id);
-        // return view('Admin.lihatDataPengaduan', compact('aspirasi'));
-    }
-
-    /* Show the form for editing the specified resource. */
-    public function edit(string $id)
     {
         $aspirasi = Aspirasi::findOrFail($id);
         $input = InputAspirasi::where('id_pelaporan', $id)->first();
-        $kategori = Kategori::where('id_kategori', $id)->first();
-        $siswa = null;
-        if ($input) {
-            $siswa = Siswa::where('nis', $input->nis)->first();
-        }
+        $siswa = $input ? Siswa::where('nis', $input->nis)->first() : null;
+        $kategori = Kategori::find($aspirasi->id_kategori);
+        
+        return view('Admin.lihatDataPengaduan', compact('aspirasi', 'input', 'siswa', 'kategori'));
+    }
 
-        return view('Admin.lihatDataPengaduan', compact('aspirasi','input','siswa','kategori'));
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        // Ambil data dari InputAspirasi berdasarkan id_pelaporan
+        $input = InputAspirasi::with(['aspirasi', 'kategori', 'siswa'])
+            ->where('id_pelaporan', $id)
+            ->first();
+        
+        if (!$input) {
+            return redirect()->route('aspirasi.index')->with('error', 'Data tidak ditemukan');
+        }
+        
+        $aspirasi = $input->aspirasi;
+        $siswa = $input->siswa;
+        $kategori = Kategori::all(); // Ini untuk pilihan kategori di form (jika perlu edit kategori)
+        $kategoriTerpilih = $input->kategori; // Ini kategori yang dipilih
+        
+        return view('Admin.lihatDataPengaduan', compact('input', 'aspirasi', 'siswa', 'kategori', 'kategoriTerpilih'));
     }
 
     /**
@@ -83,8 +117,24 @@ class aspirasiControl extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            ''
+            'status' => 'required|in:menunggu,proses,selesai,ditolak',
+            'feedback' => 'nullable|string',
         ]);
+
+        // Cari aspirasi berdasarkan id_aspirasi atau id_pelaporan
+        $aspirasi = Aspirasi::where('id_aspirasi', $id)->orWhere('id_pelaporan', $id)->first();
+        
+        if (!$aspirasi) {
+            return redirect()->route('aspirasi.index')->with('error', 'Data tidak ditemukan');
+        }
+
+        // Update aspirasi
+        $aspirasi->update([
+            'status' => $request->status,
+            'feedback' => $request->feedback,
+        ]);
+
+        return redirect()->route('aspirasi.index')->with('success', 'Status dan feedback berhasil diupdate.');
     }
 
     /**
@@ -92,9 +142,24 @@ class aspirasiControl extends Controller
      */
     public function destroy(string $id)
     {
-        $aspirasi = Aspirasi::firstOrFail();
-        $aspirasi->delete();
+        // Cari data berdasarkan id_pelaporan
+        $input = InputAspirasi::where('id_pelaporan', $id)->first();
+        
+        if ($input) {
+            // Hapus aspirasi terkait dulu
+            if ($input->aspirasi) {
+                $input->aspirasi->delete();
+            }
+            // Hapus input aspirasi
+            $input->delete();
+        } else {
+            // Kalau tidak ditemukan di InputAspirasi, coba hapus langsung dari Aspirasi
+            $aspirasi = Aspirasi::where('id_pelaporan', $id)->first();
+            if ($aspirasi) {
+                $aspirasi->delete();
+            }
+        }
 
-        return redirect()->route('aspirasi.index')->with('aspiDeleted', 'Data siswa berhasil dihapus.');
+        return redirect()->route('aspirasi.index')->with('aspiDeleted', 'Data pengaduan berhasil dihapus.');
     }
 }

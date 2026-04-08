@@ -118,9 +118,11 @@
                         <td>
                             {{-- STATUS dari tabel aspirasi --}}
                             @if($item->aspirasi && $item->aspirasi->status == 'proses')
-                                <span class="badge bg-danger">Memproses</span>
+                                <span class="badge bg-info">Diproses</span>
                             @elseif($item->aspirasi && $item->aspirasi->status == 'selesai')
                                 <span class="badge bg-success">Selesai</span>
+                            @elseif($item->aspirasi && $item->aspirasi->status == 'ditolak')
+                                <span class="badge bg-danger">Ditolak</span>
                             @else
                                 <span class="badge bg-warning text-dark">Menunggu</span>
                             @endif

@@ -19,13 +19,21 @@
         </h5>
     </div>
 
-    {{-- Table Data Siswa --}}
+    {{-- Table Data Pengaduan --}}
     
     <div class="container mt-5 mb-5">
 
-        @if(@session('aspiDeleted'))
-            <div class="alert alert-success">
-                {{ session('aspiDeleted') }}
+        @if(session('aspiDeleted'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-check me-2"></i> {{ session('aspiDeleted') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-exclamation me-2"></i> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
@@ -33,61 +41,112 @@
             <div class="col-md-12 shadow p-4 bg-info-subtle rounded">
 
                 <div class="bg-info rounded-2 ps-3 py-2 text-start mb-4 border-bottom border-dark-subtle">
-                    <h5> <i class="fa-regular fa-message"></i> Tabel Data Siswa</h5>
+                    <h5> <i class="fa-regular fa-message"></i> Tabel Data Pengaduan Siswa</h5>
                 </div>
 
-                <table class="table table-bordered table-striped">
-                    <thead class="text-center border border-dark">
-                        <tr>
-                            <th>No</th>
-                            <th>Tanggal</th>
-                            <th>NIS</th>
-                            <th>Kelas</th>
-                            <th>Kategori</th>
-                            <th>Lokasi</th>
-                            <th>Keterangan</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="border border-dark-subtle">
-                        @foreach($dataFinal as $item)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $item['input']->tanggal ?? '-' }}</td>
-                            <td>{{ $item['siswa']->nis ?? '-' }}</td>
-                            <td>{{ $item['siswa']->kelas ?? '-' }}</td>
-                            <td>{{ $item['kategori']->ket_kategori ?? '-' }}</td>
-                            <td>{{ $item['input']->lokasi ?? '-' }}</td>
-                            <td>{{ $item['input']->ket ?? '-' }}</td>
-                            <td class="text-center">
-                                @php
-                                    $status = $item['aspirasi']->status ?? '-';
-                                @endphp
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="text-center align-middle table-dark">
+                            <tr>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>NIS</th>
+                                <th>Kelas</th>
+                                <th>Kategori</th>
+                                <th>Lokasi</th>
+                                <th>Keterangan</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                            @forelse($dataFinal as $item)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+                                
+                                {{-- TANGGAL --}}
+                                <td class="text-center">
+                                    @if(isset($item['input']) && $item['input'])
+                                        {{ \Carbon\Carbon::parse($item['input']->created_at)->isoFormat('DD MMM YYYY') ?? '-' }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                
+                                {{-- NIS --}}
+                                <td class="text-center">
+                                    {{ $item['siswa']->nis ?? '-' }}
+                                </td>
+                                
+                                {{-- KELAS --}}
+                                <td class="text-center">
+                                    {{ $item['siswa']->kelas ?? '-' }}
+                                </td>
+                                
+                                {{-- KATEGORI --}}
+                                <td>
+                                    {{ $item['kategori']->ket_kategori ?? '-' }}
+                                </td>
+                                
+                                {{-- LOKASI --}}
+                                <td>
+                                    {{ $item['input']->lokasi ?? '-' }}
+                                </td>
+                                
+                                {{-- KETERANGAN --}}
+                                <td>
+                                    {{ $item['input']->ket ?? '-' }}
+                                </td>
+                                
+                                {{-- STATUS --}}
+                                <td class="text-center">
+                                    @php
+                                        $status = $item['aspirasi']->status ?? 'menunggu';
+                                    @endphp
 
-                                @if ($status == 'menunggu')
-                                    <span class="badge bg-danger">Menunggu</span>
-                                @elseif($status == 'proses')
-                                    <span class="badge bg-warning">Proses</span>
-                                @elseif($status == 'selesai')
-                                    <span class="badge bg-success">Selesai</span>
-                                @endif
-                            </td>
-                            <td class="text-center">
-                                <!-- Tombol Lihat -->
-                                <a href="{{ route('aspirasi.edit', $item['aspirasi']->id_aspirasi) }}" class="btn btn-sm btn-primary">Lihat</a>
+                                    @if($status == 'menunggu')
+                                        <span class="badge bg-warning text-dark">Menunggu</span>
+                                    @elseif($status == 'proses')
+                                        <span class="badge bg-info text-white">Diproses</span>
+                                    @elseif($status == 'selesai')
+                                        <span class="badge bg-success">Selesai</span>
+                                    @elseif($status == 'ditolak')
+                                        <span class="badge bg-danger">Ditolak</span>
+                                    @else
+                                        <span class="badge bg-secondary">{{ $status }}</span>
+                                    @endif  
+                                </td>
+                                
+                                {{-- AKSI --}}
+                                <td class="text-center">
+                                    <div class="d-flex gap-1 justify-content-center">
+                                        <!-- Tombol Lihat/Edit -->
+                                        <a href="{{ route('aspirasi.edit', $item['aspirasi']->id_aspirasi ?? $item['input']->id_pelaporan) }}" class="btn btn-sm btn-primary">
+                                            <i class="fa-solid fa-eye"></i> Lihat
+                                        </a>
 
-                                <!-- Tombol Hapus -->
-                                <form action="{{ route('aspirasi.destroy', $item['aspirasi']->id_aspirasi) }}" method="POST" style="display: inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                        {{-- <!-- Tombol Hapus -->
+                                        <form action="{{ route('aspirasi.destroy', $item['aspirasi']->id_aspirasi ?? $item['input']->id_pelaporan) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="fa-solid fa-trash"></i> Hapus
+                                            </button>
+                                        </form> --}}
+                                    </div>
+                                </td>
+                            </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="10" class="text-center py-4">
+                                        <i class="fa-solid fa-inbox fa-2x text-muted mb-2 d-block"></i>
+                                        <span class="text-muted">Belum ada data pengaduan</span>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
 
             </div>
         </div>

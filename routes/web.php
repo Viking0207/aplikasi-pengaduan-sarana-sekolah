@@ -11,6 +11,7 @@ use App\Http\Controllers\aspirasiControl;
 use App\Http\Controllers\forumAspirasi;
 use App\Http\Controllers\kategoriContoller;
 use App\Http\Controllers\laporanAdmin;
+use App\Http\Controllers\rekapanController;
 /* MODELS */
 use App\Models\Admin;
 
@@ -61,6 +62,7 @@ Route::get('/home-admin', function () {
             
 /* Data Aspirasi */
 Route::get('/data-pengaduan', [aspirasiControl::class, 'index'])->name('aspirasi.index');
+Route::put('/data-pengaduan/{id}/update', [aspirasiControl::class, 'update'])->name('aspirasi.update');
 Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
 Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name('aspirasi.edit');
 
@@ -81,7 +83,12 @@ Route::get('/aspirasi/{id}/edit', [forumAspirasi::class, 'edit'])->name('forum.e
 Route::put('/aspirasi/{id}', [forumAspirasi::class, 'update'])->name('forum.update');
 Route::delete('/aspirasi/{id}', [forumAspirasi::class, 'destroy'])->name('forum.destroy');
 
-
+/* Rekapan histori (admin) */
+Route::prefix('admin')->group(function () {
+    Route::get('/rekapan', [rekapanController::class, 'index'])->name('rekapan.index');
+    Route::get('/rekapan/filter', [rekapanController::class, 'filter'])->name('rekapan.filter');
+    Route::get('/rekapan/export', [rekapanController::class, 'export'])->name('rekapan.export');
+});
 
 
 

@@ -13,6 +13,7 @@ class Aspirasi extends Model
     protected $fillable = [
         'status',
         'id_kategori',
+        'status',
         'feedback',
     ];
 
