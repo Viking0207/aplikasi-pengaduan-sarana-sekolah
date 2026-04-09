@@ -98,7 +98,7 @@ class rekapanController extends Controller
         $filename = 'rekapan_aspirasi_' . date('Y-m-d') . '.csv';
         
         $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['No', 'Tanggal Update', 'NIS', 'Nama Siswa', 'Kelas', 'Lokasi', 'Pengaduan', 'Status', 'Feedback']);
+        fputcsv($handle, ['No', 'Tanggal Update', 'NIS', 'Kelas', 'Lokasi', 'Pengaduan', 'Status', 'Feedback']);
         
         $no = 1;
         foreach ($histori as $item) {
@@ -109,7 +109,6 @@ class rekapanController extends Controller
                 $no++,
                 $item->tanggal_update,
                 $item->nis ?? '-',
-                $siswa->nama ?? '-',
                 $siswa->kelas ?? '-',
                 $input->lokasi ?? '-',
                 $input->ket ?? '-',

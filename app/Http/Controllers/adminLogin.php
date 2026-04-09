@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class adminLogin extends Controller
 {
@@ -33,13 +34,14 @@ class adminLogin extends Controller
 
         $admin = Admin::where('username', $request->username)->first();
 
-        if (!$admin) {
-            return redirect()->route('loginAdmin')->with('errorUSER', 'Username atau password salah bos!');
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
+        // Jika username TIDAK ADA ATAU password SALAH → ERROR
+        return redirect()->route('loginAdmin')->with('errorUSER', 'Username atau password salah bos!');
         }
-
         session(['admin_username' => $admin->username]);
+        session(['admin_id' => $admin->id]);
 
-        return redirect()->route('admin.homeAdmin')->with('success', 'Selamat datang bos!.');
+        return redirect()->route('admin.homeAdmin')->with('success', 'Selamat datang bos!.'. $admin->username . '!');
     }
 
     public function logout()
