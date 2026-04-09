@@ -44,6 +44,21 @@
                     <h5> <i class="fa-regular fa-message"></i> Tabel Data Pengaduan Siswa</h5>
                 </div>
 
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                            
+                    <form action="{{ route('aspirasi.search') }}" method="GET" class="d-flex mb-3">
+
+                        <a href="{{ route('aspirasi.index') }}" class="btn btn-info me-2">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </a>
+
+                        <input type="text" name="search" class="form-control me-2" placeholder="Cari..." value="{{ request('search') }}">
+
+                        <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                    
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead class="text-center align-middle table-dark">
@@ -51,6 +66,7 @@
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>NIS</th>
+                                <th>Nama</th>
                                 <th>Kelas</th>
                                 <th>Kategori</th>
                                 <th>Lokasi</th>
@@ -76,6 +92,11 @@
                                 {{-- NIS --}}
                                 <td class="text-center">
                                     {{ $item['siswa']->nis ?? '-' }}
+                                </td>
+
+                                {{-- NAMA --}}
+                                <td class="text-center">
+                                    {{ $item['siswa']->nama ?? '-' }}
                                 </td>
                                 
                                 {{-- KELAS --}}

@@ -66,14 +66,11 @@
                 </div>
 
                 {{-- Form Edit Status & Feedback --}}
-                <div class="border-top pt-4">
-                    <div class="row justify-content-center mb-3">
-                        <div class="col-md-6">
-                            <h6 class="mb-3 text-center shadow-sm rounded-2 border border-primary bg-info text-white py-2">
+                <div class="border-top pt-3">
+
+                            <h5 class="mb-3 text-center pb-2">
                                 Update Status & Feedback
-                            </h6>
-                        </div>
-                    </div>
+                            </h5>
 
                     <form action="{{ route('aspirasi.update', $aspirasi->id_aspirasi ?? $input->id_pelaporan) }}" method="POST">
                         @csrf

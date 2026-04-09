@@ -201,6 +201,7 @@
                                 <th>No</th>
                                 <th>Tanggal Update</th>
                                 <th>NIS</th>
+                                <th>Nama</th>
                                 <th>Komentar</th>
                                 <th>Status</th>
                                 <th>Feedback Admin</th>
@@ -214,6 +215,7 @@
                                     {{ \Carbon\Carbon::parse($item->tanggal_update)->isoFormat('DD MMM YYYY') }}
                                 </td>
                                 <td class="text-center">{{ $item->nis ?? '-' }}</td>
+                                <td class="text-center">{{ $item->nama ?? '-' }}</td>
                                 <td>
                                     <div class="text-start">
                                         <strong>Lokasi:</strong> {{ $item->aspirasi->inputAspirasi->lokasi ?? '-' }}<br>

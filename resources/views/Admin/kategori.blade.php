@@ -79,7 +79,7 @@
                                     <td>{{ $kategori->ket_kategori }}</td>
                                     <td>
                                         <!-- Tombol Lihat -->
-                                        <a href="#" class="btn btn-sm btn-primary">Lihat</a>
+                                        <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $kategori->id_kategori }}">Lihat</a>
         
                                         <!-- Tombol Hapus -->
                                         <form action="{{ route('kategori.destroy', $kategori->id_kategori) }}" method="POST" style="display: inline-block;">
@@ -126,6 +126,38 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal edit Kategori --}}
+
+    @foreach($dataKategori as $item)
+    <div class="modal fade" id="modalEdit{{ $item->id_kategori }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Kategori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ route('kategori.update', $item->id_kategori) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="modal-body">
+                        <label class="form-label">Nama Kategori</label>
+                        <input type="text" name="ket_kategori" class="form-control" value="{{ $item->ket_kategori }}" required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    @endforeach
 
 </body>
 </html>

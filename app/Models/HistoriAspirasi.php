@@ -14,6 +14,7 @@ class HistoriAspirasi extends Model
     protected $fillable = [
         'id_aspirasi',
         'nis',
+        'nama',
         'status',
         'feedback',
         'tanggal_update'

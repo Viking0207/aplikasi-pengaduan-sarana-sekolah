@@ -32,9 +32,14 @@
                             </div>
                         @endif
 
-                        <div class="form-floating border border-success rounded mb-5">
+                        <div class="form-floating border border-success rounded mb-3">
                             <input type="text" class="form-control @if(session('error')) is-invalid @endif" id="floatingInput" name="nis" placeholder="NIS" maxlength="9" pattern="[0-9]{9}" required>
                             <label for="floatingInput">NIS</label>
+                        </div>
+
+                        <div class="form-floating border border-success rounded mb-5">
+                            <input type="password" class="form-control @if(session('error')) is-invalid @endif" id="floatingInput" name="pass_siswa" placeholder="Password" maxlength="8" required>
+                            <label for="floatingInput">Password</label>
                         </div>
                         
                         <button type="submit" class="btn btn-outline-primary w-100 d-grid">Login</button>

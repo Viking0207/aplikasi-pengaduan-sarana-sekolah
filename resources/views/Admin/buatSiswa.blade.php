@@ -57,9 +57,19 @@
                             <label for="floatingInput">NIS (Nomor Induk Siswa)</label>
                         </div>
 
-                        <div class="form-floating border border-info rounded mb-5">
+                        <div class="form-floating border border-info rounded mb-3">
+                            <input type="text" class="form-control" id="floatingInput" name="nama" placeholder="Nama" required>
+                            <label for="floatingInput">Nama</label>
+                        </div>
+
+                        <div class="form-floating border border-info rounded mb-3">
                             <input type="text" class="form-control" id="floatingInput" name="kelas" placeholder="Kelas" required>
                             <label for="floatingInput">Kelas</label>
+                        </div>
+
+                        <div class="form-floating border border-info rounded mb-5">
+                            <input type="password" class="form-control" id="floatingInput" name="pass_siswa" placeholder="Password" maxlength="8" required>
+                            <label for="floatingInput">Password</label>
                         </div>
                         
                         <button type="submit" class="btn btn-primary w-100 d-grid">Tambah siswa</button>
@@ -93,6 +103,7 @@
                     <thead class="text-center border border-dark">
                         <tr>
                             <th>NIS (Nomor Induk Siswa)</th>
+                            <th>Nama</th>
                             <th>Kelas</th>
                             <th>Aksi</th>
                         </tr>
@@ -101,6 +112,7 @@
                         @foreach($dataSiswa as $siswa)
                         <tr>
                             <td>{{ $siswa->nis }}</td>
+                            <td>{{ $siswa->nama }}</td>
                             <td>{{ $siswa->kelas }}</td>
                             <td class="text-center">
                                 <!-- Tombol Edit -->

@@ -73,7 +73,19 @@ class kategoriContoller extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'ket_kategori' => 'required|string|max:50',
+        ], [
+            'ket_kategori.required' => 'Nama kategori harus diisi.',
+            'ket_kategori.max' => 'Nama kategori maksimal 50 karakter.',
+        ]);
+
+        $kategori = Kategori::findOrFail($id);
+        $kategori->update([
+            'ket_kategori' => $request->ket_kategori,
+        ]);
+
+        return redirect()->route('kategori.index')->with('ekSuccess', 'Kategori berhasil diupdate.');
     }
 
     /**

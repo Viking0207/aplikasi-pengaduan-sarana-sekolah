@@ -11,8 +11,9 @@ class Siswa extends Model
     public $primaryKey = 'nis';
     
     protected $fillable = [
-        'nis',
+        'nama',
         'kelas',
+        'pass_siswa',
     ];
 
     public $incrementing = false;

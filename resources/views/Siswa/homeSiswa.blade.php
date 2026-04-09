@@ -20,7 +20,7 @@
                 @csrf
 
                 <h5 class="justify-content-end text-light me-3 pt-2">
-                    NIS: <span class="badge bg-info-subtle text-dark">{{ session('siswa_nis') }}</span>
+                    <strong>{{ session('siswa_nama') }}</strong> : <span class="badge bg-info-subtle text-dark">{{ session('siswa_nis') }}</span>
                 </h5>
 
                 <button type="submit" class="btn btn-outline-light">
@@ -105,6 +105,7 @@
                     <tr>
                         <th>No</th>
                         <th>Tanggal</th> 
+                        <th>Nama</th>
                         <th>Kategori</th>
                         <th>Pengaduan</th>
                         <th>Status</th>
@@ -120,6 +121,7 @@
                         <td>
                             {{ $item->created_at ? $item->created_at->isoFormat('DD MMMM YYYY') : '-' }}
                         </td>
+                        <td class="text-center">{{ $dataSiswa->nama ?? '-' }}</td>
                         <td>{{ $item->kategori->ket_kategori ?? '-' }}</td>
                         <td>{{ $item->lokasi }} - {{ $item->ket }}</td>
                         <td>
@@ -163,7 +165,7 @@
                     </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center">Belum ada pengaduan</td>
+                            <td colspan="8" class="text-center">Belum ada pengaduan</td>
                         </tr>
                     @endforelse
                 </tbody>

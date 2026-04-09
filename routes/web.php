@@ -63,6 +63,7 @@ Route::get('/home-admin', function () {
 /* Data Aspirasi */
 Route::get('/data-pengaduan', [aspirasiControl::class, 'index'])->name('aspirasi.index');
 Route::put('/data-pengaduan/{id}/update', [aspirasiControl::class, 'update'])->name('aspirasi.update');
+Route::get('/data-pengaduan/search', [aspirasiControl::class, 'search'])->name('aspirasi.search'); 
 Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
 Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name('aspirasi.edit');
 // ✅ Route untuk edit berdasarkan id_pelaporan (PASTI UNIK)
@@ -76,6 +77,7 @@ Route::get('/kategori', [kategoriContoller::class, 'index'])->name('kategori.ind
 Route::get('/kategori/create', [kategoriContoller::class, 'create'])->name('kategori.create');
 Route::post('/kategori', [kategoriContoller::class, 'store'])->name('kategori.store');
 Route::delete('/kategori/{id}', [kategoriContoller::class, 'destroy'])->name('kategori.destroy');
+Route::put('/kategori/{id}', [kategoriContoller::class, 'update'])->name('kategori.update');
 Route::get('/kategori/search', [kategoriContoller::class, 'search'])->name('kategori.search');
 
 /* Histori Admin */

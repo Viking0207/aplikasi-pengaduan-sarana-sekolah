@@ -39,9 +39,19 @@
                                 <label for="floatingInput">NIS (Nomor Induk Siswa)</label>
                             </div>
 
-                            <div class="form-floating border border-info rounded mb-5">
+                            <div class="form-floating border border-info rounded mb-3">
+                                <input type="text" class="form-control" id="floatingInput" name="nama" placeholder="Nama" value="{{ old('nama', $siswa->nama) }}" required>
+                                <label for="floatingInput">Nama</label>
+                            </div>
+
+                            <div class="form-floating border border-info rounded mb-3">
                                 <input type="text" class="form-control" id="floatingInput" name="kelas" placeholder="Kelas" value="{{ $siswa->kelas }}" required>
                                 <label for="floatingInput">Kelas</label>
+                            </div>
+
+                            <div class="form-floating border border-info rounded mb-5">
+                                <input type="password" class="form-control" name="pass_siswa" placeholder="Buat password baru..." maxlength="8" required>
+                                <label for="floatingInput">Buat password baru...</label>
                             </div>
                             
                             <button type="submit" class="btn btn-primary w-100 d-grid">Edit siswa</button>
