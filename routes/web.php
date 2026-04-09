@@ -85,9 +85,9 @@ Route::delete('/aspirasi/{id}', [forumAspirasi::class, 'destroy'])->name('forum.
 
 /* Rekapan histori (admin) */
 Route::prefix('admin')->group(function () {
-    Route::get('/rekapan', [rekapanController::class, 'index'])->name('rekapan.index');
-    Route::get('/rekapan/filter', [rekapanController::class, 'filter'])->name('rekapan.filter');
-    Route::get('/rekapan/export', [rekapanController::class, 'export'])->name('rekapan.export');
+    Route::get('/laporan', [rekapanController::class, 'index'])->name('rekapan.index');
+    Route::get('/laporan/filter', [rekapanController::class, 'filter'])->name('rekapan.filter');
+    Route::get('/laporan/export', [rekapanController::class, 'export'])->name('rekapan.export');
 });
 
 

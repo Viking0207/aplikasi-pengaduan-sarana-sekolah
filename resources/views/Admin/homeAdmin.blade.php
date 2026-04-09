@@ -68,7 +68,7 @@
                             <i class="fa-solid fa-book-bookmark mb-3"></i>
                             <h5>Laporan</h5>
                                 <p class="text-muted">Rekap pengaduan</p>
-                                <a href="{{ route('laporan.index') }}" class="btn btn-primary">Lihat Detail</a>
+                                <a href="{{ route('rekapan.index') }}" class="btn btn-primary">Lihat Detail</a>
                         </div>
                     </div>
                 </div>
