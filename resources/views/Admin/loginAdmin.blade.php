@@ -25,9 +25,10 @@
                     <form action="{{ route('admin.login') }}" method="POST">
                         @csrf
 
-                        @if(@session('errorUSER'))
-                            <div class="alert alert-danger">
-                                {{ session('errorUSER') }}
+                        @if(session('errorUSER'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> {{ session('errorUSER') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 

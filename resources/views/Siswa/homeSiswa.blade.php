@@ -37,9 +37,16 @@
     <h3 class="mb-4 fw-bold">Pengaduan Sarana Sekolah</h3>
 
     <!-- ✅ ALERT -->
+    @if(session('siswaLogin'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i> {{ session('siswaLogin') }}
+        </div>
+    @endif
+
     @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 

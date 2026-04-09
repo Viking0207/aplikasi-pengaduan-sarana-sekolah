@@ -15,6 +15,7 @@ class Aspirasi extends Model
         'id_kategori',
         'status',
         'feedback',
+        'id_pelaporan'
     ];
 
     public $timestamps = false;

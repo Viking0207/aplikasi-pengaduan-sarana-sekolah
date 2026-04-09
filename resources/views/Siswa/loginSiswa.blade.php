@@ -24,15 +24,16 @@
                 <div class="card-body">
                     <form action="{{ route('siswa.login') }}" method="POST">
                         @csrf
-                        
-                        @if(@session('errorNIS'))
-                            <div class="alert alert-danger">
-                                {{ session('errorNIS') }}
+
+                        @if(session('errorNIS'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> {{ session('errorNIS') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
                         <div class="form-floating border border-success rounded mb-5">
-                            <input type="text" class="form-control @if(session('error')) is-invalid @endif" id="floatingInput" name="nis" placeholder="NIS" required>
+                            <input type="text" class="form-control @if(session('error')) is-invalid @endif" id="floatingInput" name="nis" placeholder="NIS" maxlength="9" pattern="[0-9]{9}" required>
                             <label for="floatingInput">NIS</label>
                         </div>
                         

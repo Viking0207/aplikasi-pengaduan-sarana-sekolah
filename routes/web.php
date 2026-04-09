@@ -65,6 +65,11 @@ Route::get('/data-pengaduan', [aspirasiControl::class, 'index'])->name('aspirasi
 Route::put('/data-pengaduan/{id}/update', [aspirasiControl::class, 'update'])->name('aspirasi.update');
 Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
 Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name('aspirasi.edit');
+// ✅ Route untuk edit berdasarkan id_pelaporan (PASTI UNIK)
+Route::get('/data-pengaduan/pelaporan/{id}', [aspirasiControl::class, 'editByPelaporan'])->name('aspirasi.edit.pelaporan');
+
+// ✅ Route untuk edit berdasarkan id_aspirasi
+Route::get('/data-pengaduan/aspirasi/{id}', [aspirasiControl::class, 'editByAspirasi'])->name('aspirasi.edit.aspirasi');
 
 /* Kategori */
 Route::get('/kategori', [kategoriContoller::class, 'index'])->name('kategori.index');

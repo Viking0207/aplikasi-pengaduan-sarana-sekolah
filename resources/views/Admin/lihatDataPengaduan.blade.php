@@ -56,7 +56,7 @@
                             <th class="table-secondary">Tanggal Pengaduan</th>
                             <td>
                                 @if($input && $input->created_at)
-                                    {{ \Carbon\Carbon::parse($input->created_at)->isoFormat('DD MMMM YYYY, HH:mm') }}
+                                    {{ \Carbon\Carbon::parse($input->created_at)->isoFormat('DD MMMM YYYY') }}
                                 @else
                                     -
                                 @endif

@@ -34,22 +34,25 @@
                         @csrf
 
                         {{-- Success Message --}}
-                        @if(@session('adminSuccess'))
-                            <div class="alert alert-success">
-                                {{ session('adminSuccess') }}
+                        @if(session('adminSuccess'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> {{ session('adminSuccess') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
-                        @if(@session('updateSuccess'))
-                            <div class="alert alert-success">
-                                {{ session('updateSuccess') }}
+                        @if(session('updateSuccess'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> {{ session('updateSuccess') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
                         {{-- Error Message --}}
-                        @if(@session('errorPASS'))
-                            <div class="alert alert-danger">
-                                {{ session('errorPASS') }}
+                        @if(session('errorPASS'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> {{ session('errorPASS') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
@@ -71,10 +74,11 @@
                 {{-- Table Data Admin --}}
                 
                 <div class="container mt-5 mb-5">
-            
-                    @if(@session('adminDeleted'))
-                        <div class="alert alert-success">
-                            {{ session('adminDeleted') }}
+
+                    @if(session('adminDeleted'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fa-solid fa-circle-check me-2"></i> {{ session('adminDeleted') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
             

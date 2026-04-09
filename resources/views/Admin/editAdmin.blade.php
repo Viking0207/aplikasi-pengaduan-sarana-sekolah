@@ -35,11 +35,12 @@
                             @method('PUT')
 
                             {{-- Error Message --}}
-                            @if(@session('errorPASS'))
-                                <div class="alert alert-danger">
-                                    {{ session('errorPASS') }}
+                            @if(session('errorPASS'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fa-solid fa-circle-check me-2"></i> {{ session('errorPASS') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
-                            @endif
+                            @endif  
 
                             <div class="form-floating border border-info rounded mb-3">
                                 <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Username" value="{{ old('username', $admin->username) }}" required>

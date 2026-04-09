@@ -41,7 +41,7 @@ class siswaLogin extends Controller
             'siswa_kelas' => $siswa->kelas
             ]);
 
-        return redirect()->route('forum.index')->with('success', 'Selamat datang bos!.');
+        return redirect()->route('forum.index')->with('siswaLogin', 'Selamat datang bos!.');
     }
 
     public function logout()

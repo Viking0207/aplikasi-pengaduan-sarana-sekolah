@@ -25,15 +25,17 @@
         <div class="row justify-content-center">
             <div class="col-md-12 ">
 
-                @if(@session('katDeleted'))
-                    <div class="alert alert-success">
-                        {{ session('katDeleted') }}
+                @if(session('katDeleted'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i> {{ session('katDeleted') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
 
-                @if(@session('ekSuccess'))
-                    <div class="alert alert-success">
-                        {{ session('ekSuccess') }}
+                @if(session('ekSuccess'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i> {{ session('ekSuccess') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
                 

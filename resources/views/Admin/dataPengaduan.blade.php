@@ -23,12 +23,12 @@
     
     <div class="container mt-5 mb-5">
 
-        @if(session('aspiDeleted'))
+        @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa-solid fa-circle-check me-2"></i> {{ session('aspiDeleted') }}
+                <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        @endif
+        @endif  
 
         @if(session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -121,7 +121,7 @@
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">
                                         <!-- Tombol Lihat/Edit -->
-                                        <a href="{{ route('aspirasi.edit', $item['aspirasi']->id_aspirasi ?? $item['input']->id_pelaporan) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('aspirasi.edit.pelaporan', $item['input']->id_pelaporan) }}" class="btn btn-sm btn-primary">
                                             <i class="fa-solid fa-eye"></i> Lihat
                                         </a>
 

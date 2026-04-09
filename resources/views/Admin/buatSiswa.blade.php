@@ -34,11 +34,12 @@
                         @csrf
 
                         {{-- Success Message --}}
-                        @if(@session('inputSuccess'))
-                            <div class="alert alert-success">
-                                {{ session('inputSuccess') }}
+                        @if(session('inputSuccess'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fa-solid fa-circle-check me-2"></i> {{ session('inputSuccess') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
-                        @endif
+                        @endif  
 
                         {{-- Error Message --}}
                         @if($errors->any())
