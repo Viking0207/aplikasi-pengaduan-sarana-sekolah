@@ -45,7 +45,7 @@ class siswaController extends Controller
             'nis' => $request->nis,
             'nama' => $request->nama,
             'kelas' => $request->kelas,
-            'pass_siswa' => Hash::make($request->pass_siswa), // Hash password
+            'pass_siswa' => Hash::make($request->pass_siswa), 
         ]);
 
         return redirect()->route('siswa.index')->with('inputSuccess', 'Data siswa berhasil ditambahkan.');
@@ -61,13 +61,14 @@ class siswaController extends Controller
 
 
     /* Update the specified resource in storage. */
+
     public function update(Request $request, string $nis)
     {
         $request->validate([
             'nis' => 'required|string|regex:/^[0-9]+$/|digits:9|unique:siswa,nis,' . $nis . ',nis',
             'nama' => 'required|string|max:100',
             'kelas' => 'required',
-            'password' => 'nullable|string|max:8', // nullable karena bisa tidak diisi saat update
+            'password' => 'nullable|string|max:8',
         ], [ 
             'nis.digits' => 'NIS harus terdiri dari 9 digit angka.',
             'nis.regex' => 'NIS harus berupa angka.',
@@ -86,9 +87,8 @@ class siswaController extends Controller
             'kelas' => $request->kelas,
         ];
         
-        // Update password hanya jika diisi
         if ($request->filled('pass_siswa')) {
-            $dataUpdate['pass_siswa'] = Hash::make($request->pass_siswa); // ✅ Konsisten pakai Hash::make()
+            $dataUpdate['pass_siswa'] = Hash::make($request->pass_siswa); 
         }
         
         $siswa->update($dataUpdate);
@@ -96,9 +96,7 @@ class siswaController extends Controller
         return redirect()->route('siswa.index')->with('editSuccess', 'Data siswa berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    /* Remove the specified resource from storage. */
     public function destroy(string $nis)
     {
         $siswa = Siswa::where('nis', $nis)->firstOrFail();

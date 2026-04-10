@@ -18,7 +18,6 @@ class rekapanController extends Controller
             ->get()
             ->unique('id_aspirasi');
         
-        // ✅ PASTIKAN STATISTIK DI DEFINISIKAN
         $statistik = [
             'total' => $histori->count(),
             'proses' => HistoriAspirasi::where('status', 'proses')->count(),
@@ -27,20 +26,14 @@ class rekapanController extends Controller
             'hari_ini' => HistoriAspirasi::whereDate('tanggal_update', today())->count(),
         ];
         
-        // ✅ CEK APAKAH DATA TERKIRIM
-        // dd($statistik, $histori); // Hapus tanda // untuk debug
-        
         return view('Admin.laporanAdmin', compact('histori', 'statistik'));
     }
 
-    /**
-     * Filter data berdasarkan tanggal dan status
-     */
+    /* Filter data berdasarkan tanggal dan status */
     public function filter(Request $request)
     {
         $query = HistoriAspirasi::with(['aspirasi.inputAspirasi', 'siswa']);
         
-        // ✅ VALIDASI TANGGAL TIDAK MELEBIHI HARI INI
         $today = date('Y-m-d');
         
         if ($request->filter_type != 'bulan') {
@@ -87,9 +80,7 @@ class rekapanController extends Controller
         return view('Admin.laporanAdmin', compact('histori', 'statistik'));
     }
 
-    /**
-     * Export ke CSV
-     */
+    /*] Export ke CSV */
     public function export()
     {
         $histori = HistoriAspirasi::with(['aspirasi.inputAspirasi', 'siswa'])

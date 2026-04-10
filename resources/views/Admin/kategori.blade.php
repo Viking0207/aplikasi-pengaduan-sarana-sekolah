@@ -78,10 +78,8 @@
                                     <td>({{ $loop->iteration }})</td>
                                     <td>{{ $kategori->ket_kategori }}</td>
                                     <td>
-                                        <!-- Tombol Lihat -->
                                         <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $kategori->id_kategori }}">Lihat</a>
         
-                                        <!-- Tombol Hapus -->
                                         <form action="{{ route('kategori.destroy', $kategori->id_kategori) }}" method="POST" style="display: inline-block;">
                                             @csrf
                                             @method('DELETE')

@@ -10,6 +10,7 @@
 
 </head>
 <body class="bg-light">
+    @yield('content')
 
     <div class="container" style="margin-top: 7rem;">
         <div class="row justify-content-center align-items-center">

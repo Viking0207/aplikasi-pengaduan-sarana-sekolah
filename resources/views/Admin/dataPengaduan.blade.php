@@ -80,46 +80,20 @@
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 
-                                {{-- TANGGAL --}}
                                 <td class="text-center">
                                     @if(isset($item['input']) && $item['input'])
                                         {{ \Carbon\Carbon::parse($item['input']->created_at)->isoFormat('DD MMM YYYY') ?? '-' }}
                                     @else
                                         -
                                     @endif
-                                </td>
+                                </td> 
+                                <td class="text-center"> {{ $item['siswa']->nis ?? '-' }} </td>
+                                <td class="text-center"> {{ $item['siswa']->nama ?? '-' }} </td>
+                                <td class="text-center"> {{ $item['siswa']->kelas ?? '-' }} </td>
+                                <td> {{ $item['kategori']->ket_kategori ?? '-' }} </td>
+                                <td> {{ $item['input']->lokasi ?? '-' }}</td>
+                                <td> {{ $item['input']->ket ?? '-' }} </td>
                                 
-                                {{-- NIS --}}
-                                <td class="text-center">
-                                    {{ $item['siswa']->nis ?? '-' }}
-                                </td>
-
-                                {{-- NAMA --}}
-                                <td class="text-center">
-                                    {{ $item['siswa']->nama ?? '-' }}
-                                </td>
-                                
-                                {{-- KELAS --}}
-                                <td class="text-center">
-                                    {{ $item['siswa']->kelas ?? '-' }}
-                                </td>
-                                
-                                {{-- KATEGORI --}}
-                                <td>
-                                    {{ $item['kategori']->ket_kategori ?? '-' }}
-                                </td>
-                                
-                                {{-- LOKASI --}}
-                                <td>
-                                    {{ $item['input']->lokasi ?? '-' }}
-                                </td>
-                                
-                                {{-- KETERANGAN --}}
-                                <td>
-                                    {{ $item['input']->ket ?? '-' }}
-                                </td>
-                                
-                                {{-- STATUS --}}
                                 <td class="text-center">
                                     @php
                                         $status = $item['aspirasi']->status ?? 'menunggu';
@@ -138,22 +112,12 @@
                                     @endif  
                                 </td>
                                 
-                                {{-- AKSI --}}
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">
-                                        <!-- Tombol Lihat/Edit -->
                                         <a href="{{ route('aspirasi.edit.pelaporan', $item['input']->id_pelaporan) }}" class="btn btn-sm btn-primary">
                                             <i class="fa-solid fa-eye"></i> Lihat
                                         </a>
 
-                                        {{-- <!-- Tombol Hapus -->
-                                        <form action="{{ route('aspirasi.destroy', $item['aspirasi']->id_aspirasi ?? $item['input']->id_pelaporan) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="fa-solid fa-trash"></i> Hapus
-                                            </button>
-                                        </form> --}}
                                     </div>
                                 </td>
                             </tr>

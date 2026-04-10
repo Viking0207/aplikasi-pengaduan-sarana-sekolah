@@ -20,7 +20,6 @@
 
     <div class="container mt-4 mb-5">
         
-        {{-- JUDUL --}}
         <div class="text-center mb-4">
             <h3 class="fw-bold">
                 <i class="fa-solid fa-chart-line text-info me-2"></i> 
@@ -29,7 +28,6 @@
             <p class="text-muted">Catatan aktivitas perubahan status dan feedback admin</p>
         </div>
 
-        {{-- STATISTIK CARD --}}
         <div class="row mb-4">
             <div class="col-md-3">
                 <div class="card bg-primary text-white shadow">
@@ -69,18 +67,15 @@
             </div>
         </div>
 
-        {{-- FILTER --}}
         <div class="card shadow mb-4">
             <div class="card-header bg-dark text-white">
                 <i class="fa-solid fa-filter me-2"></i> Filter Data
             </div>
             <div class="card-body">
-                {{-- Overflow auto untuk scroll horizontal --}}
                 <div style="overflow-x: auto; white-space: nowrap;">
                     <form action="{{ route('rekapan.filter') }}" method="GET" style="min-width: 900px;">
                         <div class="row g-3 align-items-end">
                             
-                            {{-- Pilihan Jenis Filter --}}
                             <div class="col-md-2">
                                 <label class="form-label">Filter Berdasarkan</label>
                                 <select name="filter_type" class="form-select" onchange="this.form.submit()">
@@ -89,7 +84,6 @@
                                 </select>
                             </div>
 
-                            {{-- FILTER PER TANGGAL (Range Date) --}}
                             @if(request('filter_type') != 'bulan')
                             <div class="col-md-5">
                                 <div class="row g-2">
@@ -106,7 +100,6 @@
                                             max="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
-                                {{-- Pesan error jika tanggal melebihi hari ini --}}
                                 @php
                                     $startError = request('start_date') && request('start_date') > date('Y-m-d');
                                     $endError = request('end_date') && request('end_date') > date('Y-m-d');
@@ -119,7 +112,6 @@
                             </div>
                             @endif
 
-                            {{-- FILTER PER BULAN --}}
                             @if(request('filter_type') == 'bulan')
                             <div class="col-md-5">
                                 <div class="row g-2">
@@ -157,7 +149,6 @@
                             </div>
                             @endif
 
-                            {{-- Status --}}
                             <div class="col-md-2">
                                 <label class="form-label">Status</label>
                                 <select name="status" class="form-select">
@@ -185,7 +176,6 @@
             </div>
         </div>
 
-        {{-- TABEL REKAPAN --}}
         <div class="card shadow">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                 <span><i class="fa-solid fa-table-list me-2"></i> Data Histori</span>

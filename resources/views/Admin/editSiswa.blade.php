@@ -27,8 +27,6 @@
                     <h5>Edit Akun Siswa</h5>
                 </div>
 
-                {{-- Form Buat Data Siswa--}}
-
                     <div class="card-body">
                         <form action="{{ route('siswa.update', $siswa->nis) }}" method="POST">
                             @csrf

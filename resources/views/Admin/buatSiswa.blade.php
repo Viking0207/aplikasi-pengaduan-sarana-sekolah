@@ -115,10 +115,8 @@
                             <td>{{ $siswa->nama }}</td>
                             <td>{{ $siswa->kelas }}</td>
                             <td class="text-center">
-                                <!-- Tombol Edit -->
                                 <a href="{{ route('siswa.edit', $siswa->nis) }}" class="btn btn-sm btn-primary">Edit</a>
 
-                                <!-- Tombol Hapus -->
                                 <form action="{{ route('siswa.destroy', $siswa->nis) }}" method="POST" style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')

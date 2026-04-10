@@ -32,11 +32,8 @@
 
 <div class="container py-4">
     
-
-    <!-- 🔥 JUDUL -->
     <h3 class="mb-4 fw-bold">Pengaduan Sarana Sekolah</h3>
 
-    <!-- ✅ ALERT -->
     @if(session('siswaLogin'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fa-solid fa-circle-check me-2"></i> {{ session('siswaLogin') }}
@@ -52,7 +49,7 @@
 
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <!-- 📩 FORM PENGADUAN -->
+            <!-- FORM PENGADUAN -->
             <div class="card mb-4 shadow-md">
                 <div class="card-header bg-primary text-white">
                     Form Pengaduan
@@ -62,7 +59,6 @@
                     <form action="{{ route('forum.store') }}" method="POST">
                         @csrf
         
-                        <!-- KATEGORI -->
                         <div class="mb-3">
                             <label class="form-label"> <i class="fa-solid fa-tag text-primary me-1"></i> Kategori:</label>
                             <select name="id_kategori" class="form-select mb-2">
@@ -78,7 +74,6 @@
                             <input type="text" name="lokasi" class="form-control" placeholder="Contoh: Ruang Kelas X RPL 1, Laboratorium, Perpustakaan, dll." required>
                         </div>
         
-                        <!-- ISI LAPORAN -->
                         <div class="mb-3">
                             <label class="form-label"> <i class="fa-solid fa-message text-primary me-1"></i> Isi Pengaduan:</label>
                             <textarea name="ket" class="form-control" rows="3" placeholder="Contoh: Kursi rusak di kelas..." required></textarea>
@@ -92,7 +87,7 @@
     </div>
 
 
-    <!-- 📋 HISTORI -->
+    <!-- HISTORI -->
     <div class="card shadow-sm">
         <div class="card-header bg-dark text-white">
             Histori Pengaduan
@@ -125,7 +120,7 @@
                         <td>{{ $item->kategori->ket_kategori ?? '-' }}</td>
                         <td>{{ $item->lokasi }} - {{ $item->ket }}</td>
                         <td>
-                            {{-- STATUS dari tabel aspirasi --}}
+                            {{-- STATUS --}}
                             @if($item->aspirasi && $item->aspirasi->status == 'proses')
                                 <span class="badge bg-info">Diproses</span>
                             @elseif($item->aspirasi && $item->aspirasi->status == 'selesai')
@@ -137,7 +132,7 @@
                             @endif
                         </td>
                         <td>
-                            {{-- FEEDBACK dari tabel aspirasi --}}
+                            {{-- FEEDBACK --}}
                             @if($item->aspirasi && $item->aspirasi->feedback)
                                 <span class="text-success">{{ $item->aspirasi->feedback }}</span>
                             @else

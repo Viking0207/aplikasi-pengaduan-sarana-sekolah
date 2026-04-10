@@ -27,14 +27,11 @@
                     <h5>Edit Akun Siswa</h5>
                 </div>
 
-                {{-- Form Buat Data Siswa--}}
-
                     <div class="card-body">
                         <form action="{{ route('admin.update', $admin->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 
-                            {{-- Error Message --}}
                             @if(session('errorPASS'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     <i class="fa-solid fa-circle-check me-2"></i> {{ session('errorPASS') }}

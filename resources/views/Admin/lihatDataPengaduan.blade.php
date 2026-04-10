@@ -28,7 +28,6 @@
                     <p class="text-muted small">Lihat data pengaduan dan update status/feedback</p>
                 </div>
 
-                {{-- Tabel Data Pengaduan (Read Only) --}}
                 <div class="table-responsive mb-4">
                     <table class="table table-bordered">
                         <tr class="table-secondary">
@@ -41,7 +40,6 @@
                         </tr>
                         <tr>
                             <th class="table-secondary">Kategori</th>
-                            {{-- Perbaikan di sini --}}
                             <td>{{ $input->kategori->ket_kategori ?? $kategoriTerpilih->ket_kategori ?? '-' }}</td>
                         </tr>
                         <tr>
@@ -65,7 +63,6 @@
                     </table>
                 </div>
 
-                {{-- Form Edit Status & Feedback --}}
                 <div class="border-top pt-3">
 
                             <h5 class="mb-3 text-center pb-2">
@@ -76,7 +73,6 @@
                         @csrf
                         @method('PUT')
 
-                        {{-- Error Message --}}
                         @if(session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <i class="fa-solid fa-circle-exclamation me-2"></i> {{ session('error') }}
@@ -84,7 +80,6 @@
                             </div>
                         @endif
 
-                        {{-- Success Message --}}
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
@@ -92,7 +87,6 @@
                             </div>
                         @endif
 
-                        {{-- Status --}}
                         <div class="mb-3">
                             <label for="status" class="form-label fw-semibold">
                                 <i class="fa-solid fa-flag-checkered text-info me-1"></i> Status Pengaduan
@@ -105,7 +99,6 @@
                             </select>
                         </div>
                         
-                        {{-- Feedback --}}
                         <div class="mb-4">
                             <label for="feedback" class="form-label fw-semibold">
                                 <i class="fa-solid fa-comment-dots text-info me-1"></i> Feedback / Balasan

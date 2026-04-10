@@ -10,7 +10,6 @@
 </head>
 <body class="bg-light">
 
-    {{-- Tombol Kembali --}}
     <div class="text-start ms-4 pt-3">
         <h5>
             <a href="{{ route('forum.index') }}" class="text-decoration-none text-info">
@@ -19,12 +18,10 @@
         </h5>
     </div>
 
-    {{-- Main Content --}}
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-7">
 
-                {{-- Card --}}
                 <div class="card shadow border-0 rounded-5">
                     <div class="card-header bg-white border-0 rounded-5 pt-4 pb-2">
                         <div class="text-center">
@@ -35,7 +32,6 @@
 
                     <div class="card-body px-4 pb-4">
 
-                        {{-- Alert Error --}}
                         @if(session('error'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <i class="fa-solid fa-circle-exclamation me-2"></i> {{ session('error') }}
@@ -43,7 +39,6 @@
                             </div>
                         @endif
 
-                        {{-- Alert Success --}}
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
@@ -51,12 +46,10 @@
                             </div>
                         @endif
 
-                        {{-- Form --}}
                         <form action="{{ route('forum.update', $aspirasi->id_pelaporan) }}" method="POST">
                             @csrf
                             @method('PUT')
 
-                            {{-- Kategori --}}
                             <div class="mb-3">
                                 <label for="kategori" class="form-label fw-semibold">
                                     <i class="fa-solid fa-tag text-info me-1"></i> Kategori Pengaduan
@@ -72,7 +65,6 @@
                                 </select>
                             </div>
 
-                            {{-- Lokasi --}}
                             <div class="mb-3">
                                 <label for="lokasi" class="form-label fw-semibold">
                                     <i class="fa-solid fa-location-dot text-info me-1"></i> Lokasi
@@ -82,7 +74,6 @@
                                     value="{{ old('lokasi', $aspirasi->lokasi) }}" required>
                             </div>
 
-                            {{-- Isi Pengaduan --}}
                             <div class="mb-4">
                                 <label for="ket" class="form-label fw-semibold">
                                     <i class="fa-solid fa-message text-info me-1"></i> Isi Pengaduan
@@ -92,12 +83,10 @@
                                     style="height: 130px" required>{{ old('ket', $aspirasi->ket) }}</textarea>
                             </div>
 
-                            {{-- Tombol Submit --}}
                             <button type="submit" class="btn btn-info w-100 py-2 fw-semibold text-white">
                                 <i class="fa-solid fa-floppy-disk me-2"></i> Update Pengaduan
                             </button>
 
-                            {{-- Info --}}
                             <div class="text-center mt-4">
                                 <small class="text-muted">
                                     <i class="fa-solid fa-info-circle me-1"></i> 

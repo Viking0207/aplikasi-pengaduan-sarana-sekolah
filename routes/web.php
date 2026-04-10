@@ -12,6 +12,7 @@ use App\Http\Controllers\forumAspirasi;
 use App\Http\Controllers\kategoriContoller;
 use App\Http\Controllers\laporanAdmin;
 use App\Http\Controllers\rekapanController;
+
 /* MODELS */
 use App\Models\Admin;
 
@@ -66,10 +67,7 @@ Route::put('/data-pengaduan/{id}/update', [aspirasiControl::class, 'update'])->n
 Route::get('/data-pengaduan/search', [aspirasiControl::class, 'search'])->name('aspirasi.search'); 
 Route::delete('/data-pengaduan/{id}', [aspirasiControl::class, 'destroy'])->name('aspirasi.destroy');
 Route::get('/data-pengaduan/{id}/edit', [aspirasiControl::class, 'edit'])->name('aspirasi.edit');
-// ✅ Route untuk edit berdasarkan id_pelaporan (PASTI UNIK)
 Route::get('/data-pengaduan/pelaporan/{id}', [aspirasiControl::class, 'editByPelaporan'])->name('aspirasi.edit.pelaporan');
-
-// ✅ Route untuk edit berdasarkan id_aspirasi
 Route::get('/data-pengaduan/aspirasi/{id}', [aspirasiControl::class, 'editByAspirasi'])->name('aspirasi.edit.aspirasi');
 
 /* Kategori */
@@ -96,19 +94,3 @@ Route::prefix('admin')->group(function () {
     Route::get('/laporan/filter', [rekapanController::class, 'filter'])->name('rekapan.filter');
     Route::get('/laporan/export', [rekapanController::class, 'export'])->name('rekapan.export');
 });
-
-
-
-
-
-
-
-
-
-/* jaga jaga kalo error */
-// Route::get('/home-siswa', function () {
-//     dd([
-//         'session_siswa_nis' => session('siswa_nis'),
-//         'siswa_data' => Siswa::where('nis', session('siswa_nis'))->first(),
-//     ]);
-// })->name('siswa.homeSiswa');

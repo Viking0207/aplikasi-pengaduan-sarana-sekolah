@@ -9,7 +9,7 @@ class HistoriAspirasi extends Model
     protected $table = 'histori_aspirasi';
     protected $primaryKey = 'id_histori';
     
-    public $timestamps = false; // karena pakai tanggal_update otomatis
+    public $timestamps = false; 
     
     protected $fillable = [
         'id_aspirasi',
@@ -20,13 +20,11 @@ class HistoriAspirasi extends Model
         'tanggal_update'
     ];
     
-    // Relasi ke Aspirasi
     public function aspirasi()
     {
         return $this->belongsTo(Aspirasi::class, 'id_aspirasi', 'id_aspirasi');
     }
     
-    // Relasi ke Siswa
     public function siswa()
     {
         return $this->belongsTo(Siswa::class, 'nis', 'nis');

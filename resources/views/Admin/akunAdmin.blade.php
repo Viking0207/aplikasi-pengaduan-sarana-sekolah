@@ -27,13 +27,12 @@
                     <h5>Kelola Akun Admin</h5>
                 </div>
 
-                {{-- Form Buat Data Siswa--}}
+                {{-- Form Buat Data Admin--}}
 
                 <div class="card-body">
                     <form action="{{ route('admin.store') }}" method="POST">
                         @csrf
 
-                        {{-- Success Message --}}
                         @if(session('adminSuccess'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 <i class="fa-solid fa-circle-check me-2"></i> {{ session('adminSuccess') }}
@@ -48,7 +47,6 @@
                             </div>
                         @endif
 
-                        {{-- Error Message --}}
                         @if(session('errorPASS'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                 <i class="fa-solid fa-circle-check me-2"></i> {{ session('errorPASS') }}
@@ -101,10 +99,8 @@
                                     <tr>
                                         <td>{{ $admin->username }}</td>
                                         <td class="text-center">
-                                            <!-- Tombol Edit -->
                                             <a href="{{ route('admin.edit', $admin->id) }}" class="btn btn-sm btn-primary">Edit</a>
             
-                                            <!-- Tombol Hapus -->
                                             <form action="{{ route('admin.destroy', $admin->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
