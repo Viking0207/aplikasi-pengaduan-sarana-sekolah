@@ -10,7 +10,8 @@
     
 </head>
 <body class="bg-light">
-    
+    @yield('content')
+
     <div class="container" style="margin-top: 7rem;">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-6 shadow p-4 bg-success-subtle rounded">
@@ -67,8 +68,7 @@
             
         </div>
     </div>
+
+    @stack('scripts')
 </body>
-
-    
-
 </html>

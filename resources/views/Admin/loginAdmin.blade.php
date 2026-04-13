@@ -40,7 +40,18 @@
 
                         <div class="form-floating border border-success rounded mb-5">
                             <input type="password" class="form-control" id="floatingInput" name="password" placeholder="Password" maxlength="8" required>
-                            <label for="floatingInput">Password</label>
+                            <label for="password">Password</label>
+                        </div>
+
+                        <div class="position-relative mb-5">
+                            <div class="form-floating border border-success rounded">
+                                <input type="password" class="form-control @if(session('error')) is-invalid @endif" id="password" name="pass_siswa" placeholder="Password" maxlength="8" required>
+                                <label for="password">Password</label>
+                            </div>
+                            <button type="button" class="btn btn-link position-absolute top-50 end-0 translate-middle-y me-2 text-success" 
+                                    onclick="togglePassword()" style="text-decoration: none; z-index: 10;">
+                                <i class="fa-regular fa-eye-slash" id="toggleIcon"></i>
+                            </button>
                         </div>
                         
                         <button type="submit" class="btn btn-outline-primary w-100 d-grid">Login</button>
@@ -58,9 +69,11 @@
                 </div>
 
             </div>
-            
-            
+        
         </div>
     </div>
+
+    @stack('scripts')
 </body>
+
 </html>
